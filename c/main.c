@@ -1,45 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "header.h"
+// data structures
+#include "stack.h"
+#include "tuple.h"
+
+// actual functions
+#include "gcd.h"
+#include "bezout.h"
 
 int main(){
 
-	int a = 15042;
+	int a = 150;
 	int b = 57;
-	
-	printf("testing %d and %d\n\n", a, b);
 
-	printf("Euclidean algorithm:\n");
-	
 	int g = gcd(a, b);
-	printf("gcd(%d, %d) = %d\n", a, b, g);
-	
-	printf("\n");
-	
-	printf("reverse Euclidean algorithm:\n");
-	stack V = rev_euclid(a, b);
-	
-//	turn V around for printing out in an intuitve order
-	stack V_rev = new_stack(NULL);
-	while((*V).data != NULL) {
-		
-		V_rev = push(V_rev, (*V).data);
-		V = pop(V);
-		
-	}
-	print_stack(V_rev);
-	
+	printf("gcd(%d, %d) = %d\n\n", a, b, g);
+
 	printf("Bézout identity: ");
-	tuple test = bezout(a, b);
+	tuple test = identity(a, b);
 	print_tuple(test);
-	
-	printf("\n");
-	
-//	calling a method that checks the equlaity of LHS and RHS of a tuple
-	int x = is_correct(test);
-	printf("is Bézout identity correct: %d\n", x);
-	
+	printf("is Bézout identity correct: %d\n\n", is_correct(test));
+
+	// calculating the inverse
+	a = a / g;
+	b = b / g;
+	printf("Computing inverse(%d, %d): ", a, b);
+	int inv = inverse(a, b);
+	printf("%d\n", inv);
+
 	return 0;
 
 }

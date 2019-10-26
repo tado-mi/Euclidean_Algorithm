@@ -50,22 +50,17 @@ Bézout's identity for numbers *a* and *b* is *am + bn = gcd(a, b)*, where m and
 
 ## makefile:
 
-For more information on the magic, see [here](https://www.cs.swarthmore.edu/~newhall/unixhelp/howto_makefiles.html).
+*coming soon*
+
+For more information on the magic, see [here](https://www.cs.swarthmore.edu/~newhall/unixhelp/javamakefiles.html).
 
 ## compiling:
 
-to work with the jammed.c file hit on terminal:
+(*to work with the jammed.c file*) hit on terminal:
     
 	gcc jammed.c -o j.out
-	./j.out
-	
-for the rest of them:
-
-	make
-	make run
-	make clean
+    	./j.out
 
 # other
 
 shall such desire be felt, feel free to report bugs/suggestions/questions to tadouchiha@gmail.com
-

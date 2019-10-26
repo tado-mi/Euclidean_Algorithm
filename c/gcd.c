@@ -1,24 +1,36 @@
+#include "gcd.h"
+
 // gcd with stack
-stack gcd_st(int a, int b, stack S) {
-	
-	if (a < b) return gcd_st(b, a, S);
-	
-	int q = a / b;
-	int r = a - q * b;
-	
-	S = push(S, new_tuple(a, b, q, r));
-	if (r == 0) return S;
-	
-	return gcd_st(b, r, S);
-	
+stack gcd_st(int a, int b) {
+
+	if (a < b) {
+		return gcd_st(b, a);
+	}
+
+	stack S = new_stack();
+	int r = 0;
+
+	do {
+
+		int q = a / b;
+		r = a - q * b;
+
+		push(S, new_tuple(a, b, q, r));
+
+		// reassign
+		a = b;
+		b = r;
+
+	} while (r > 0);
+
+	return S;
+
 }
 
 // normal gcd
 int gcd(int a, int b){
-	
-	stack S = new_stack(NULL);
-	S = gcd_st(a, b, S);
-	print_stack(S);
-	return (*(*S).data).b;
-	
+
+	stack S =	gcd_st(a, b);
+	return get_b(peek(S));
+
 }

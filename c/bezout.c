@@ -1,62 +1,90 @@
-stack rev_euclid(int a, int b){
-	
-	stack S = new_stack(NULL);
-	S = gcd_st(a, b, S);
-	
-	if ((*(*S).data).r == 0) S = pop(S);
-	stack V = new_stack(NULL);
-	
-	while ((*S).data != NULL) {
-		
-//		top of the calls of (normal) euclidean algorithm
-//		focus: a = bq + rc
-		tuple focus = (*S).data;
-		
-//		intitially: c = 1
-//		so, r = b(-q) + a
-		tuple new_focus = new_tuple((*focus).r, (*focus).b, -(*focus).q, (*focus).a);
-		
-//		previous tuple used to insert the previous values of a, q, r and c
-		tuple pre = (*V).data;
-		
-		if (pre != NULL) {
-			
-			(*new_focus).q = (*new_focus).q * (*pre).q + (*pre).c;
-			(*new_focus).b = (*pre).r;
-			(*new_focus).a = (*pre).a;
-			(*new_focus).c = (*pre).q * (*new_focus).c;
-			
-		}
-		
-		V = push(V, new_focus);
-		S = pop(S);
-		
-//		damage control just in case
-		if (S == NULL) break;
-		
+#include "bezout.h"
+
+// reversing the stack of the Euclidean algorithm
+stack rev_euclid(int a, int b) {
+
+	stack S = gcd_st(a, b);
+	if (get_r(peek(S)) == 0) {
+		pop(S);
 	}
-	
+
+	stack V = new_stack();
+
+	while (!is_empty(S)) {
+
+		// top of the calls of (normal) Euclidean algorithm
+		// tmp: a = bq + rc
+		tuple tmp = pop(S);
+
+		// intitially: c = 1
+		// so, r = b(-q) + a
+		int a =	get_r(tmp);
+		int b = get_b(tmp);
+		int q = - get_q(tmp);
+		int r = get_a(tmp);
+
+		tuple focus = new_tuple(a, b, q, r);
+
+		// previous tuple used to insert the previous values of a, q, r and c
+		tuple pre = peek(V);
+
+
+		if (pre != NULL) {
+
+			a = get_a(pre);
+			b = get_r(pre);
+			q = get_q(focus) * get_q(pre) + get_c(pre);
+
+			focus = new_tuple(a, b, q, get_r(focus));
+
+			int c = get_q(pre) * get_c(focus);
+			set_c(focus, c);
+
+		}
+
+		push(V, focus);
+
+	}
+
 	return V;
 
 }
 
-//	finding the Bézout identity:
-//	integers m and n such that am + bn = gcd(a, b)
-tuple bezout(int a, int b) {
+// finding the Bézout identity: integers x and y such that ax + by = gcd(a, b)
+tuple identity(int a, int b) {
 
-	stack S = new_stack(NULL);
-	
-//	gcd_st returns the stack of all recursive calls it had to make
-	S = gcd_st(a, b, S);
-	
-//	top of the stack is a tuple of form x = g y + 0
-//	needed to extract g = gcd(a, b)
-	S = pop(S);
-	
-//	new stack for recursive calls
-	stack V = rev_euclid(a, b);	
-	
-//	the last element of the stack is the Bézout identity for a and b
-	return (*V).data;
-	
+	stack V = rev_euclid(a, b);
+	if (is_empty(V)) {
+		printf("\n\terror: Bézout identiy(%d, %d) on reverse Euclidean\n", a, b);
+		return NULL;
+	}
+
+	// the last element of the stack is the Bézout identity for a and b
+	return peek(V);
+
+}
+
+// find the inverse of int a mod n, if such exists
+int inverse(int x, int n) {
+
+	if (x > n) {
+		x = x % n;
+	}
+
+	tuple temp = identity(x, n);
+	if (temp == NULL || get_a(temp) != 1) {
+
+		printf("\n\terror: inverse(%d, mod %d)\n", x, n);
+		return -1;
+
+	}
+
+	int ans = 0;
+
+	if (x == get_b(temp)) ans = get_q(temp);
+	else ans = get_r(temp);
+
+	while (ans < 0) ans = ans + n;
+	return ans;
+
 }

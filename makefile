@@ -18,4 +18,3 @@ run:
 
 clean:
 	$(RM) $(TARGET)
-
