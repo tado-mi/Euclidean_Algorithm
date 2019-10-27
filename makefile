@@ -7,15 +7,17 @@ CC = gcc
 CFLAGS = -g -Wall
 
 TARGET = main
+OUTFILE = main.o
+
+DATA_STRUCTS = ../data-struct/src
 
 all: $(TARGET)
 
 $(TARGET): $(TARGET).c
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c
+	$(CC) $(CFLAGE) $(DATA_STRUCTS)/*.c *.c -o $(OUTFILE)
 
 run:
-	./$(TARGET)
+	./$(OUTFILE)
 
 clean:
-	$(RM) $(TARGET)
-
+	$(RM) $(OUTFILE)

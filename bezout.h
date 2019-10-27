@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "../data-struct/stack.h"
 #include "tuple.h"
 
 #include "gcd.h"

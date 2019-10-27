@@ -1,13 +1,13 @@
 #include "gcd.h"
 
 // gcd with stack
-stack gcd_st(int a, int b) {
+STACK gcd_st(int a, int b) {
 
 	if (a < b) {
 		return gcd_st(b, a);
 	}
 
-	stack S = new_stack();
+	STACK S = new_STACK();
 	int r = 0;
 
 	do {
@@ -30,7 +30,7 @@ stack gcd_st(int a, int b) {
 // normal gcd
 int gcd(int a, int b){
 
-	stack S =	gcd_st(a, b);
+	STACK S =	gcd_st(a, b);
 	return get_b(peek(S));
 
 }

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 // data structures
-#include "stack.h"
+#include "../data-struct/stack.h"
 #include "tuple.h"
 
 // actual functions

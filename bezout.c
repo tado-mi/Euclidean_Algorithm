@@ -1,14 +1,14 @@
 #include "bezout.h"
 
-// reversing the stack of the Euclidean algorithm
-stack rev_euclid(int a, int b) {
+// reversing the STACK of the Euclidean algorithm
+STACK rev_euclid(int a, int b) {
 
-	stack S = gcd_st(a, b);
+	STACK S = gcd_st(a, b);
 	if (get_r(peek(S)) == 0) {
 		pop(S);
 	}
 
-	stack V = new_stack();
+	STACK V = new_STACK();
 
 	while (!is_empty(S)) {
 
@@ -53,13 +53,13 @@ stack rev_euclid(int a, int b) {
 // finding the Bézout identity: integers x and y such that ax + by = gcd(a, b)
 tuple identity(int a, int b) {
 
-	stack V = rev_euclid(a, b);
+	STACK V = rev_euclid(a, b);
 	if (is_empty(V)) {
 		printf("\n\terror: Bézout identiy(%d, %d) on reverse Euclidean\n", a, b);
 		return NULL;
 	}
 
-	// the last element of the stack is the Bézout identity for a and b
+	// the last element of the STACK is the Bézout identity for a and b
 	return peek(V);
 
 }
