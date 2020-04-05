@@ -1,4 +1,4 @@
-#include "bezout.h"
+#include "../bezout.h"
 
 // reversing the STACK of the Euclidean algorithm
 STACK rev_euclid(int a, int b) {
@@ -66,6 +66,10 @@ tuple identity(int a, int b) {
 
 // find the inverse of int a mod n, if such exists
 int inverse(int x, int n) {
+
+	if (x == 1) {
+		return 1;
+	}
 
 	if (x > n) {
 		x = x % n;

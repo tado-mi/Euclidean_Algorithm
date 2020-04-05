@@ -9,6 +9,8 @@ CFLAGS = -g -Wall
 TARGET = main
 OUTFILE = main.o
 
+# data-struct is a separate repo
+# clone & adjust paths accordingly
 DATA_STRUCTS = ../data-struct/src
 
 all: $(TARGET)

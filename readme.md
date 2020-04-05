@@ -1,56 +1,41 @@
-# showing off:
+# Euclidean algorithm
 
-**author:** Lusine Keshishyan / tado-mi
+Included is a package of C source code files to calculate the [greates common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) and the associated [Bézout's identity](https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity) of any 2 integers using the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm). It was written as an excercise in coding in C, and in particular how to use header files well (: better than the day before).
 
-**date:**   12 Apr 2018
+# Files:
 
-**use:**    free. credit when due is encouraged and appreciated
+## src/tuple.c:
 
-# general:
+a simple data structure consisting of 5 integers such that `a = bq + rc`. It includes some simple functions:
 
-included is a package of C source code files to calculate the [GCD](https://en.wikipedia.org/wiki/Greatest_common_divisor) and the associated [Bézout's identity](https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity) of any 2 integers using the [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm).
+* **print_tuple(tuple me):** is a messy, yet trivial function that ensures the tuple is printed out in a human-readable form
 
-# included files:
+* **is_correct(tuple t):** is the non-trivial function that simply checks whether the numbers stored inside the tuple satisfy their 'characteristic' equation of `a = bq + rc`
 
-## main.c:
+## src/gcd.c
 
-the main file that test / demonstrates the provided data structures and functions
+Contains the recursive implementation of Euclidean algorithm.
 
-## tuple.c:
+* **gcd_st(a, b):** while `a` is not a multiple of `b`, a tuple representing `a = bq + r` is pushed on top of stack `S`, and a recursive call is made for `b` and `r`, otherwise returns `S` and is terminated. Note that maintaining the stack `S`, which is representing the steps of the execution of Euclidean algorithm, will be useful for implementation of function outputting the Bézout's identity.
 
-### tuple
+**gcd(a, b):** initializes an empty stack `S` and calls the earlier described method of `gcd_st(a, b, S)` and retrives the neseccary value from the top of `S`.
 
-a simple data structure consisting of 5 ints such that a = bq + rc
+## src/bezout.c
 
-**print_tuple(tuple me):** is a messy, yet trivial method that ensures the tuple is printed out in a human-friendly, pretty form
-**is_correct(tuple t):** is the non-trivial function that simply checks whether the numbers stored inside the tuple satisfy their 'characteristic' eqution of a = bq + rc
+Contains the implementation of the function finding the identity (`identity(a, b)`), and relevant functions.
 
-### stack
-a simple, generic implementation of the [stack](https://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29) data structure
+Bézout's identity for numbers `a` and `b` is `am + bn = gcd(a, b)`, where `m` and `n` are coprime integers. It is possible to find `m` and `n` working backwards from the Euclidean algorithm.
 
-## gcd.c
-recursive implementation of Euclidean algorithm
+# Run
 
-**gcd_st(a, b):** while *a* is not a multiple of *b*, a tuple representing *a = bq + r* is pushed on top of stack S and a recursive call is made for b and r, otherwise S is returned
-- maintainence of the stack representing the steps of the execution of Euclidean algorithm will be useful for implementation of function outputting the Bézout's identity.
-
-**gcd(a, b):** initialises and empty stack S and calls the earlier described method of **gcd_st(a, b, S)** and retrives the neseccary value from the top of S.
-
-## bezout.c
-Bézout's identity for numbers *a* and *b* is *am + bn = gcd(a, b)*, where m and n are coprime integers. It is possible to find m and n working backwards from the Euclidean algorithm.
-
-**rev_euclid(a, b):** works backwards from the stack of equations produced for Euclidean algorithm and substitutes values.
-
-**identity(a, b):** takes care of logistics and returns the top equation on the stack produced by the reverse Euclidean algorithm implemented earlier.
-
-## makefile:
-
-For more information on the magic, see [here](https://www.cs.swarthmore.edu/~newhall/unixhelp/javamakefiles.html).
+There is an included `makefile` for your (and our) convenience.
 
   make
   make run
   make clean
 
-# other
+note that the code as is will not run, as the stack file is not included.
 
-shall such desire be felt, feel free to report bugs/suggestions/questions to tadouchiha@gmail.com
+# Future plans
+
+- [ ] add user interaction

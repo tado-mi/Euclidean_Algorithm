@@ -1,4 +1,4 @@
-#include "gcd.h"
+#include "../gcd.h"
 
 // gcd with stack
 STACK gcd_st(int a, int b) {
